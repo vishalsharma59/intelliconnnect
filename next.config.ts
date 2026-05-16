@@ -17,10 +17,9 @@ const nextConfig: NextConfig = {
     ],
     formats: ['image/webp', 'image/avif'],
   },
-  // Enable React Compiler for automatic optimization
-  experimental: {
-    reactCompiler: true,
-  },
+  // experimental: {
+  //   reactCompiler: true,  // enable when Next.js types include this field
+  // },
 }
 
 export default nextConfig

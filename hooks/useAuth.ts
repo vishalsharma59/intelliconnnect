@@ -30,8 +30,8 @@ export const useAuth = () => {
     username: string
     email: string
     password: string
-    firstName: string
-    lastName: string
+    firstName?: string
+    lastName?: string
   }) => {
     return dispatch(register(userData))
   }

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { PostState, Post, PaginatedResponse } from '@types/index'
+import { PostState, Post, PaginatedResponse } from '@/types/index'
 import { apiClient } from '@utils/api'
 
 export const fetchFeed = createAsyncThunk(

@@ -30,7 +30,7 @@ export default function LoginPage() {
       if (result.type === "auth/login/fulfilled") {
         router.push("/feed");
       } else {
-        setFormError(result.payload || "Invalid email or password");
+        setFormError((result.payload as string) || "Invalid email or password");
       }
     } catch (err: any) {
       setFormError(err.message || "Something went wrong");

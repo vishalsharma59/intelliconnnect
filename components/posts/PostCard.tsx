@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Post } from "@types/index";
+import { Post } from "@/types/index";
 import { Avatar } from "@components/ui/Avatar";
 import { Button } from "@components/ui/Button";
 import {

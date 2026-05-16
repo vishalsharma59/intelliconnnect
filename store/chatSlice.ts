@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { ChatState, Conversation, Message } from '@types/index'
+import { ChatState, Conversation, Message } from '@/types/index'
 import { apiClient } from '@utils/api'
 
 export const fetchConversations = createAsyncThunk(

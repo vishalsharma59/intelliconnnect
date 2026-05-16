@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { AuthState, User, AuthResponse } from "@types/index";
+import { AuthState, User, AuthResponse } from "@/types/index";
 import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -36,8 +36,8 @@ export const register = createAsyncThunk(
       username: string;
       email: string;
       password: string;
-      firstName: string;
-      lastName: string;
+      firstName?: string;
+      lastName?: string;
     },
     { rejectWithValue },
   ) => {

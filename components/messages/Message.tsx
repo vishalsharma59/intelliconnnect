@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Message as MessageType } from "@types/index";
+import { Message as MessageType } from "@/types/index";
 import { formatRelativeTime } from "@utils/helpers";
 
 interface MessageProps {

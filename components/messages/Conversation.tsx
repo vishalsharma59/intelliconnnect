@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Conversation as ConversationType } from "@types/index";
+import { Conversation as ConversationType } from "@/types/index";
 
 interface ConversationProps {
   conversation: ConversationType;

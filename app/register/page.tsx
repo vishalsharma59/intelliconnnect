@@ -74,7 +74,7 @@ export default function RegisterPage() {
       if (result.type === "auth/register/fulfilled") {
         router.push("/feed");
       } else {
-        setFormError(result.payload || "Registration failed. Try again.");
+        setFormError((result.payload as string) || "Registration failed. Try again.");
       }
     } catch (err: any) {
       setFormError(err.message || "Something went wrong");

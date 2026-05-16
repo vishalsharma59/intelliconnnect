@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { UIState, Notification } from '@types/index'
+import { UIState, Notification } from '@/types/index'
 
 const initialState: UIState = {
   sidebarOpen: true,
