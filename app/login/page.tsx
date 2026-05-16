@@ -3,266 +3,194 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@hooks/useAuth";
-import { Mail, Lock, Loader, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
   const { login, loading, error, isAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [showPw, setShowPw] = useState(false);
   const [formError, setFormError] = useState("");
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/feed");
-    }
+    if (isAuthenticated) router.push("/feed");
   }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
-
-    if (!email || !password) {
+    if (!email.trim() || !password) {
       setFormError("Please fill in all fields");
       return;
     }
-
     try {
       const result = await login(email, password);
       if (result.type === "auth/login/fulfilled") {
         router.push("/feed");
       } else {
-        setFormError(result.payload || "Login failed");
+        setFormError(result.payload || "Invalid email or password");
       }
     } catch (err: any) {
-      setFormError(err.message || "An error occurred");
+      setFormError(err.message || "Something went wrong");
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-primary-dark to-secondary flex-col items-center justify-center p-12 relative overflow-hidden">
-        <div className="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-10 w-32 h-32 bg-secondary/30 rounded-full blur-3xl" />
+    <div className="flex min-h-svh bg-background">
+      <div className="hidden lg:flex lg:w-[44%] flex-shrink-0 flex-col items-center justify-center p-14 relative overflow-hidden bg-gradient-to-br from-primary-dark to-primary">
+        <span className="absolute -top-16 -left-16 w-64 h-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        <span className="absolute -bottom-12 -right-12 w-52 h-52 rounded-full bg-white/10 blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 text-center text-white max-w-md">
-          <div className="mb-8">
-            <h1 className="text-6xl font-bold mb-3 bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
-              IntelliConnect
-            </h1>
-            <p className="text-xl text-white/80 font-light">
-              Share. Connect. Inspire.
-            </p>
+        <div className="relative z-10 max-w-sm w-full text-white">
+          <div className="w-13 h-13 rounded-2xl bg-white/20 backdrop-blur border border-white/25 flex items-center justify-center mb-6">
+            <span className="text-sm font-black tracking-tight">IC</span>
           </div>
 
-          <div className="space-y-6 mt-12">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-lg">✨</span>
-              </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-white mb-1">
-                  Instant Sharing
-                </h3>
-                <p className="text-white/70 text-sm">
-                  Share your thoughts, photos, and ideas with the world
-                  instantly
-                </p>
-              </div>
-            </div>
+          <h1 className="text-4xl font-black tracking-tight leading-tight mb-2">
+            IntelliConnect
+          </h1>
+          <p className="text-white/70 mb-10 text-base font-normal">
+            Share. Connect. Inspire.
+          </p>
 
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-lg">🌍</span>
-              </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-white mb-1">
-                  Global Community
-                </h3>
-                <p className="text-white/70 text-sm">
-                  Connect with millions of users from around the world
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-lg">💬</span>
-              </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-white mb-1">
-                  Real-time Chat
-                </h3>
-                <p className="text-white/70 text-sm">
-                  Stay connected with instant messaging and notifications
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-white/20">
-            <p className="text-white/70 italic text-sm">
-              "IntelliConnect helps millions stay connected to what matters
-              most."
-            </p>
-          </div>
+          <ul className="space-y-4">
+            {[
+              "Real-time messaging with people you care about",
+              "Share moments through photos and posts",
+              "Discover and follow interesting people",
+            ].map((f) => (
+              <li
+                key={f}
+                className="flex items-center gap-3 text-sm text-white/80"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-white/50 flex-shrink-0" />
+                {f}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-4 sm:p-8">
+      <div className="flex-1 flex items-center justify-center px-5 py-10 sm:px-10 overflow-y-auto bg-background">
         <div className="w-full max-w-sm">
-          <div className="mb-8">
-            <div className="lg:hidden mb-4">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                IntelliConnect
-              </h1>
-            </div>
-            <h2 className="text-3xl font-bold text-foreground">Welcome Back</h2>
-            <p className="text-text-secondary mt-2 text-sm">
-              Sign in to your account to continue
-            </p>
+          <div className="flex items-center gap-2 mb-8 lg:hidden">
+            <span className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-black">
+              IC
+            </span>
+            <span className="text-base font-black text-primary tracking-tight">
+              IntelliConnect
+            </span>
           </div>
 
-          {(error || formError) && (
-            <div className="mb-6 p-4 bg-error/10 border border-error/30 backdrop-blur-sm rounded-lg">
-              <div className="flex gap-3">
-                <div className="w-5 h-5 rounded-full bg-error/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-error text-xs">!</span>
-                </div>
-                <p className="text-error text-sm font-medium">
-                  {error || formError}
-                </p>
-              </div>
+          <h2 className="text-2xl font-black text-foreground tracking-tight mb-1">
+            Welcome back
+          </h2>
+          <p className="text-sm text-text-secondary mb-7">
+            Sign in to your account to continue
+          </p>
+
+          {(formError || error) && (
+            <div className="flex items-start gap-2 p-3.5 rounded-xl bg-red-50 border border-red-100 mb-5 animate-fadeIn">
+              <span className="w-1.5 h-1.5 rounded-full bg-error flex-shrink-0 mt-1.5" />
+              <p className="text-sm text-error font-medium">
+                {formError || error}
+              </p>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">
-                Email Address
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <div className="space-y-1.5">
+              <label
+                className="text-xs font-semibold text-foreground tracking-wide"
+                htmlFor="email"
+              >
+                Email address
               </label>
               <div className="relative group">
-                <Mail className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary/40 group-focus-within:text-primary transition" />
+                <Mail
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-primary transition-colors"
+                />
                 <input
+                  id="email"
                   type="email"
+                  autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full pl-11 pr-4 py-3 border border-border rounded-lg bg-input-bg text-foreground placeholder-text-tertiary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-                  autoComplete="email"
+                  className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-border bg-input text-foreground placeholder:text-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 focus:bg-background transition"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">
-                Password
-              </label>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label
+                  className="text-xs font-semibold text-foreground tracking-wide"
+                  htmlFor="password"
+                >
+                  Password
+                </label>
+                <Link
+                  href="#"
+                  className="text-xs text-primary hover:text-primary-dark font-medium transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <div className="relative group">
-                <Lock className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary/40 group-focus-within:text-primary transition" />
+                <Lock
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-primary transition-colors"
+                />
                 <input
-                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  type={showPw ? "text" : "password"}
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-12 py-3 border border-border rounded-lg bg-input-bg text-foreground placeholder-text-tertiary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-                  autoComplete="current-password"
+                  className="w-full pl-10 pr-11 py-2.5 text-sm rounded-xl border border-border bg-input text-foreground placeholder:text-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 focus:bg-background transition"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 transform -translate-y-1/2 text-text-secondary hover:text-foreground transition"
+                  onClick={() => setShowPw((v) => !v)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors"
+                  aria-label={showPw ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
+                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-            </div>
-
-            <div className="flex items-center justify-between pt-2">
-              <label className="flex items-center gap-2.5 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border border-border bg-input-bg text-primary focus:ring-2 focus:ring-primary/20 cursor-pointer"
-                />
-                <span className="text-text-secondary text-sm group-hover:text-foreground transition">
-                  Remember me
-                </span>
-              </label>
-              <Link
-                href="#"
-                className="text-primary hover:text-primary-dark font-medium text-sm transition"
-              >
-                Forgot password?
-              </Link>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-secondary text-white font-semibold py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 shadow-lg hover:shadow-primary/50 hover:shadow-2xl"
+              className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-all shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
               {loading ? (
                 <>
-                  <Loader className="w-5 h-5 animate-spin" />
-                  <span>Signing In...</span>
+                  <Loader2 size={17} className="animate-spin" /> Signing in…
                 </>
               ) : (
                 <>
-                  <span>Sign In</span>
-                  <ArrowRight className="w-5 h-5" />
+                  Sign in <ArrowRight size={17} />
                 </>
               )}
             </button>
           </form>
 
-          <div className="my-6 flex items-center gap-3">
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-text-secondary text-xs font-medium">or</span>
-            <div className="flex-1 h-px bg-border" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            <button className="py-2.5 px-4 border border-border rounded-lg hover:bg-card-bg transition text-sm font-medium text-foreground flex items-center justify-center gap-2">
-              <span>Google</span>
-            </button>
-            <button className="py-2.5 px-4 border border-border rounded-lg hover:bg-card-bg transition text-sm font-medium text-foreground flex items-center justify-center gap-2">
-              <span>GitHub</span>
-            </button>
-          </div>
-
-          <div className="text-center">
-            <p className="text-text-secondary text-sm">
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/register"
-                className="text-primary hover:text-primary-dark font-semibold transition"
-              >
-                Create one
-              </Link>
-            </p>
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-border text-center text-text-tertiary text-xs space-y-2">
-            <p>
-              <Link href="#" className="hover:text-text-secondary transition">
-                Privacy Policy
-              </Link>
-              {" • "}
-              <Link href="#" className="hover:text-text-secondary transition">
-                Terms of Service
-              </Link>
-            </p>
-            <p>&copy; 2026 IntelliConnect. All rights reserved.</p>
-          </div>
+          <p className="text-center text-sm text-text-secondary mt-6">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/register"
+              className="text-primary font-bold hover:text-primary-dark transition-colors"
+            >
+              Create one
+            </Link>
+          </p>
         </div>
       </div>
     </div>

@@ -1,153 +1,81 @@
 @import "tailwindcss";
 
-/* ─── Tailwind v4 Theme ─────────────────────────────────────────────────── */
 @theme {
-  /* Colors */
-  --color-background: #ffffff;
-  --color-foreground: #1f2937;
-  --color-card-bg: #f9fafb;
-  --color-input-bg: #f3f4f6;
-  --color-border: #e5e7eb;
-  --color-text-secondary: #6b7280;
-  --color-text-tertiary: #9ca3af;
-
   --color-primary: #0ea5e9;
   --color-primary-dark: #0284c7;
+  --color-primary-light: #bae6fd;
+  --color-primary-50: #f0f9ff;
   --color-secondary: #06b6d4;
   --color-accent: #f97316;
 
-  --color-success: #10b981;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-card: #f8fafc;
+  --color-input: #f1f5f9;
+  --color-border: #e2e8f0;
+
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+
+  --color-success: #22c55e;
   --color-error: #ef4444;
   --color-warning: #f59e0b;
 
-  /* Font family */
   --font-family-sans:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-    Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-
-  /* Spacing */
-  --spacing-safe-top: env(safe-area-inset-top, 0px);
-  --spacing-safe-bottom: env(safe-area-inset-bottom, 0px);
+    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
-/* ─── Design System CSS Variables ────────────────────────────────────────── */
-:root {
-  --primary: #0ea5e9;
-  --primary-dark: #0284c7;
-  --secondary: #06b6d4;
-  --accent: #f97316;
-
-  --background: #ffffff;
-  --foreground: #1f2937;
-  --card-bg: #f9fafb;
-  --input-bg: #f3f4f6;
-  --border: #e5e7eb;
-  --text-secondary: #6b7280;
-  --text-tertiary: #9ca3af;
-
-  --success: #10b981;
-  --error: #ef4444;
-  --warning: #f59e0b;
-
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-    Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-
-  --safe-area-top: env(safe-area-inset-top, 0);
-  --safe-area-bottom: env(safe-area-inset-bottom, 0);
-}
-
-/* ─── Dark Mode ──────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f172a;
-    --foreground: #f1f5f9;
-    --card-bg: #1e293b;
-    --input-bg: #334155;
-    --border: #475569;
-    --text-secondary: #cbd5e1;
-    --text-tertiary: #94a3b8;
-  }
-
   @theme {
     --color-background: #0f172a;
     --color-foreground: #f1f5f9;
-    --color-card-bg: #1e293b;
-    --color-input-bg: #334155;
+    --color-card: #1e293b;
+    --color-input: #334155;
     --color-border: #475569;
     --color-text-secondary: #cbd5e1;
-    --color-text-tertiary: #94a3b8;
+    --color-text-muted: #94a3b8;
   }
 }
 
-/* ─── Base Styles ────────────────────────────────────────────────────────── */
-* {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--background);
 }
 
 body {
-  font-family: var(--font-sans);
-  color: var(--foreground);
-  background-color: var(--background);
-  line-height: 1.6;
+  font-family: var(--font-family-sans);
+  color: var(--color-foreground);
+  background: var(--color-background);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--card-bg);
+  background: var(--color-card);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
+  background: var(--color-border);
+  border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+  background: var(--color-text-muted);
 }
 
-/* ─── Selection ──────────────────────────────────────────────────────────── */
-::selection {
-  background-color: var(--primary);
-  color: white;
-}
-
-/* ─── Resets ─────────────────────────────────────────────────────────────── */
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-input,
-textarea,
-select {
-  font-family: inherit;
-}
-
-a {
-  color: var(--primary);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-a:hover {
-  color: var(--primary-dark);
-}
-
-/* ─── Animations ─────────────────────────────────────────────────────────── */
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
   to {
     transform: rotate(360deg);
   }
@@ -160,9 +88,9 @@ a:hover {
     opacity: 1;
   }
 }
-@keyframes slideIn {
+@keyframes slideUp {
   from {
-    transform: translateY(10px);
+    transform: translateY(8px);
     opacity: 0;
   }
   to {
@@ -170,13 +98,25 @@ a:hover {
     opacity: 1;
   }
 }
+@keyframes pulse-sk {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
 
 .animate-spin {
-  animation: spin 1s linear infinite;
+  animation: spin 0.75s linear infinite;
 }
 .animate-fadeIn {
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.2s ease;
 }
-.animate-slideIn {
-  animation: slideIn 0.3s ease;
+.animate-slideUp {
+  animation: slideUp 0.2s ease;
+}
+.animate-pulse {
+  animation: pulse-sk 1.6s ease-in-out infinite;
 }
