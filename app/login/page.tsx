@@ -44,9 +44,6 @@ export default function LoginPage() {
         <span className="absolute -bottom-12 -right-12 w-52 h-52 rounded-full bg-white/10 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-sm w-full text-white">
-          <div className="w-13 h-13 rounded-2xl bg-white/20 backdrop-blur border border-white/25 flex items-center justify-center mb-6">
-            <span className="text-sm font-black tracking-tight">IC</span>
-          </div>
 
           <h1 className="text-4xl font-black tracking-tight leading-tight mb-2">
             IntelliConnect
@@ -76,9 +73,6 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center px-5 py-10 sm:px-10 overflow-y-auto bg-background">
         <div className="w-full max-w-sm">
           <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <span className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-black">
-              IC
-            </span>
             <span className="text-base font-black text-primary tracking-tight">
               IntelliConnect
             </span>
